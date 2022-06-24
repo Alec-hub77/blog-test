@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 //  Routes
 import authRoutes from './routes/auth.js';
+import postRoutes from './routes/posts.js';
 
 dotenv.config();
 mongoose
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('/posts', postRoutes);
 
 //  Port Listen
 
