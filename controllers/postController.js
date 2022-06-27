@@ -29,7 +29,7 @@ export const getOnePost = async (req, res) => {
   try {
     const postId = req.params.id;
 
-    PostModel.findOneAndUpdate(
+    await PostModel.findOneAndUpdate(
       {
         _id: postId,
       },
@@ -58,7 +58,7 @@ export const getOnePost = async (req, res) => {
 export const deletePost = async (req, res) => {
   try {
     const postId = req.params.id;
-    PostModel.findOneAndDelete(
+    await PostModel.findOneAndDelete(
       {
         _id: postId,
       },
@@ -73,6 +73,28 @@ export const deletePost = async (req, res) => {
       }
     );
   } catch (error) {
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(500).json({ message: 'Something went wrong, can delete post' });
+  }
+};
+
+export const updatePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    await PostModel.updateOne(
+      {
+        _id: postId,
+      },
+      {
+        title: req.body.title,
+        text: req.body.text,
+        imageUrl: req.body.imageUrl,
+        createdBy: req.userId,
+        tags: req.body.tags,
+      }
+    );
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong, cant update post' });
   }
 };
